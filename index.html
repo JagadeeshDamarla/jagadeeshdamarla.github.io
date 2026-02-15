@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jagadeesh D | Analytical Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0c; color: #e4e4e7; scroll-behavior: smooth; overflow-x: hidden; }
+        
+        /* Premium Load Animations */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-on-load { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Skills Uniform Node Styling */
+        .skill-node {
+            width: 100px; height: 100px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 50%; transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
+        }
+        @media (min-width: 640px) { .skill-node { width: 115px; height: 115px; } }
+        
+        .node-expert { border: 1px solid rgba(59, 130, 246, 0.5); background: rgba(59, 130, 246, 0.03); }
+        .node-practicing { border: 1px solid rgba(161, 161, 170, 0.2); background: rgba(161, 161, 170, 0.03); }
+
+        .skill-level {
+            position: absolute; bottom: -20px;
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; opacity: 0; font-weight: 700; text-align: center;
+        }
+        .skill-node:hover .skill-level { bottom: 20px; opacity: 1; }
+        .skill-node:hover .skill-name { transform: translateY(-10px); }
+        .skill-name { transition: all 0.3s ease; font-weight: 600; text-align: center; }
+        .node-expert:hover { background: rgba(59, 130, 246, 0.1); border-color: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        .node-practicing:hover { background: rgba(161, 161, 170, 0.1); border-color: #fafafa; }
+
+        /* S-Shape Pipeline Animation (Top to Bottom) */
+        @keyframes rideSShape {
+            0%   { top: -20px; left: 40px; transform: rotate(90deg); opacity: 0; }
+            2%   { top: 0%; left: 40px; transform: rotate(90deg); opacity: 1; }
+            15%  { top: 33.33%; left: 40px; transform: rotate(90deg); opacity: 1; }
+            20%  { top: 33.33%; left: 40px; transform: rotate(0deg); opacity: 1; } /* Turn Right */
+            35%  { top: 33.33%; left: calc(100% - 40px); transform: rotate(0deg); opacity: 1; }
+            40%  { top: 33.33%; left: calc(100% - 40px); transform: rotate(90deg); opacity: 1; } /* Turn Down */
+            55%  { top: 66.66%; left: calc(100% - 40px); transform: rotate(90deg); opacity: 1; }
+            60%  { top: 66.66%; left: calc(100% - 40px); transform: rotate(180deg); opacity: 1; } /* Turn Left */
+            75%  { top: 66.66%; left: 40px; transform: rotate(180deg); opacity: 1; }
+            80%  { top: 66.66%; left: 40px; transform: rotate(90deg); opacity: 1; } /* Turn Down */
+            98%  { top: 100%; left: 40px; transform: rotate(90deg); opacity: 1; }
+            100% { top: 100%; left: 40px; transform: rotate(90deg); opacity: 0; }
+        }
+
+        /* Mobile Straight Animation (Top to Bottom) */
+        @keyframes rideStraightDown {
+            0%   { top: -20px; left: 24px; transform: rotate(90deg); opacity: 0; }
+            2%   { top: 0%; left: 24px; transform: rotate(90deg); opacity: 1; }
+            98%  { top: 100%; left: 24px; transform: rotate(90deg); opacity: 1; }
+            100% { top: 100%; left: 24px; transform: rotate(90deg); opacity: 0; }
+        }
+
+        @keyframes exhaust {
+            0%   { opacity: 0; transform: translateX(0) scale(1); }
+            30%  { opacity: 0.6; }
+            100% { opacity: 0; transform: translateX(-25px) scale(2.5); } 
+        }
+
+        .moto-wrapper {
+            position: absolute;
+            width: 40px; height: 40px;
+            margin-left: -20px; margin-top: -20px; /* Perfectly centers on the pixel coordinates */
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+
+        .desktop-s-moto { animation: rideSShape 12s linear infinite; }
+        .mobile-moto { animation: rideStraightDown 8s linear infinite; }
+
+        .moto-icon {
+            color: #3b82f6; font-size: 1.25rem;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+            position: relative; z-index: 2;
+        }
+
+        .smoke-container { position: absolute; left: 5px; width: 20px; height: 10px; z-index: 1; }
+        .smoke {
+            position: absolute; right: 0; top: 2px;
+            width: 6px; height: 6px; border-radius: 50%;
+            background-color: rgba(161, 161, 170, 0.6); filter: blur(2px); opacity: 0;
+        }
+
+        .s1 { animation: exhaust 0.8s linear infinite; }
+        .s2 { animation: exhaust 0.8s linear infinite 0.25s; }
+        .s3 { animation: exhaust 0.8s linear infinite 0.5s; }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20 space-y-24 md:space-y-32">
+
+        <header class="animate-on-load flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-8">
+            <div class="space-y-6 w-full md:w-auto">
+                <div class="space-y-1">
+                    <h1 class="text-5xl md:text-6xl font-black tracking-tighter text-white">Jagadeesh D.</h1>
+                    <p class="text-xl text-blue-400 font-medium tracking-wide">Analytical Engineer</p>
+                </div>
+                
+                <div class="flex flex-wrap gap-6 pt-2 border-t border-zinc-900">
+                    <div>
+                        <span class="block text-2xl font-bold text-white">100+</span>
+                        <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Pipelines</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-white">TB Scale</span>
+                        <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Data Managed</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-white">End-to-End</span>
+                        <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Delivery</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative group shrink-0 self-start md:self-auto">
+                <div class="absolute -inset-1 bg-blue-600 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                <div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full border border-zinc-800 overflow-hidden bg-zinc-900">
+                    <img src="https://i.pinimg.com/originals/f8/f4/6c/f8f46c6495d48722a2752f9544c06f3c.jpg" alt="Profile" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500 scale-105 group-hover:scale-100">
+                </div>
+            </div>
+        </header>
+
+        <section id="about" class="animate-on-load delay-100 space-y-8">
+            <h2 class="text-white text-xl md:text-2xl font-black uppercase tracking-widest flex items-center gap-4">
+                <span class="w-8 md:w-12 h-[2px] bg-blue-500 block"></span>
+                Who Am I
+            </h2>
+            <div class="border-l-2 border-blue-500/30 pl-6 space-y-4 ml-2 md:ml-4">
+                <p class="text-zinc-300 text-base md:text-lg leading-relaxed">
+                    I am an Analytical Engineer passionate about bridging the gap between raw data and actionable business insights. I specialize in building robust data architectures, optimizing warehouse performance, and developing scalable ETL/ELT pipelines. 
+                </p>
+                <p class="text-zinc-400 text-sm md:text-base leading-relaxed">
+                    With a strong foundation in modern data stack technologies, my goal is to transform chaotic data swamps into pristine, reliable data products that empower stakeholders to make informed decisions. When I'm not writing SQL or debugging dbt models, I'm exploring new machine learning concepts.
+                </p>
+            </div>
+        </section>
+
+        <section id="skills" class="animate-on-load delay-200 space-y-10">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                <h2 class="text-white text-xl md:text-2xl font-black uppercase tracking-widest flex items-center gap-4">
+                    <span class="w-8 md:w-12 h-[2px] bg-blue-500 block"></span>
+                    Expertise Map
+                </h2>
+                <div class="flex gap-4 text-[9px] uppercase tracking-widest font-bold">
+                    <span class="text-blue-400">● Expert</span>
+                    <span class="text-zinc-500">● Practicing</span>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6 pt-4">
+                <div class="skill-node node-expert"><span class="skill-name">SQL</span><span class="skill-level text-blue-400">Expert</span></div>
+                <div class="skill-node node-expert"><span class="skill-name">Python</span><span class="skill-level text-blue-400">Expert</span></div>
+                <div class="skill-node node-expert"><span class="skill-name">dbt</span><span class="skill-level text-blue-400">Expert</span></div>
+                <div class="skill-node node-expert"><span class="skill-name">Snowflake</span><span class="skill-level text-blue-400">Expert</span></div>
+                <div class="skill-node node-practicing"><span class="skill-name text-zinc-300">AWS</span><span class="skill-level text-zinc-400">Practicing</span></div>
+                <div class="skill-node node-practicing"><span class="skill-name text-zinc-300">Tableau</span><span class="skill-level text-zinc-400">Practicing</span></div>
+                <div class="skill-node node-practicing text-center"><span class="skill-name text-zinc-300 leading-tight">Data<br>Modeling</span><span class="skill-level text-zinc-400">Practicing</span></div>
+            </div>
+        </section>
+
+        <section id="experience" class="animate-on-load delay-300 space-y-10">
+            <h2 class="text-white text-xl md:text-2xl font-black uppercase tracking-widest flex items-center gap-4">
+                <span class="w-8 md:w-12 h-[2px] bg-blue-500 block"></span>
+                Career Pipeline
+            </h2>
+            
+            <div class="hidden md:grid grid-cols-2 auto-rows-fr relative w-full pt-10 pb-10 gap-y-0">
+                
+                <div class="absolute inset-0 z-0 pointer-events-none">
+                    <div class="absolute w-[2px] bg-zinc-800" style="left: 39px; bottom: 0; top: 66.66%;"></div>
+                    <div class="absolute h-[2px] bg-zinc-800" style="left: 39px; top: calc(66.66% - 1px); width: calc(100% - 78px);"></div>
+                    <div class="absolute w-[2px] bg-zinc-800" style="left: calc(100% - 41px); top: 33.33%; bottom: 33.33%;"></div>
+                    <div class="absolute h-[2px] bg-zinc-800" style="left: 39px; top: calc(33.33% - 1px); width: calc(100% - 78px);"></div>
+                    <div class="absolute w-[2px] bg-zinc-800" style="left: 39px; top: 0; bottom: 66.66%;"></div>
+                </div>
+
+                <div class="moto-wrapper desktop-s-moto pointer-events-none">
+                    <div class="smoke-container"><div class="smoke s1"></div><div class="smoke s2"></div><div class="smoke s3"></div></div>
+                    <i class="fas fa-motorcycle moto-icon"></i>
+                </div>
+
+                <div class="relative flex items-center pr-10 pl-[80px] py-12 z-20 group">
+                    <div class="absolute top-[20px] left-[10px] text-[10px] font-mono text-blue-500 tracking-widest uppercase animate-pulse">Start</div>
+                    <div class="absolute left-[16px] w-12 h-12 bg-blue-900/20 border border-blue-500 rounded flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                        <i class="fas fa-layer-group text-blue-400"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <span class="inline-block text-xs font-mono text-blue-400 tracking-tighter bg-blue-900/20 border border-blue-900/50 px-2 py-1 rounded">SERVING LAYER // PRESENT</span>
+                        <h4 class="text-white font-bold text-xl leading-tight">Sr. Analytical Engineer</h4>
+                        <p class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Current Company</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed max-w-sm">Architecting end-to-end data products for executive leadership. Optimizing warehouse costs by auditing and refactoring legacy queries.</p>
+                    </div>
+                </div>
+                <div class="relative"></div> <div class="relative"></div> <div class="relative flex items-center pl-10 pr-[80px] py-12 z-20 justify-end text-right group">
+                    <div class="absolute right-[16px] w-12 h-12 bg-[#0a0a0c] border border-zinc-800 rounded flex items-center justify-center group-hover:border-blue-500 transition duration-300">
+                        <i class="fas fa-filter text-zinc-500 group-hover:text-blue-500"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <span class="inline-block text-xs font-mono text-zinc-500 tracking-tighter bg-zinc-900 px-2 py-1 rounded">TRANSFORM LAYER // 2021-2023</span>
+                        <h4 class="text-white font-bold text-xl leading-tight">Analytical Engineer</h4>
+                        <p class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Company Name Beta</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed max-w-sm ml-auto">Scaled data warehouse infrastructure. Managed dbt modeling layers, ensuring rigorous data quality checks and testing protocols.</p>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center pr-10 pl-[80px] py-12 z-20 group">
+                    <div class="absolute left-[16px] w-12 h-12 bg-[#0a0a0c] border border-zinc-800 rounded flex items-center justify-center group-hover:border-blue-500 transition duration-300">
+                        <i class="fas fa-database text-zinc-500 group-hover:text-blue-500"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <span class="inline-block text-xs font-mono text-zinc-500 tracking-tighter bg-zinc-900 px-2 py-1 rounded">INGESTION LAYER // 2018-2020</span>
+                        <h4 class="text-white font-bold text-xl leading-tight">Data Analyst</h4>
+                        <p class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Company Name Alpha</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed max-w-sm">Extracted raw data from legacy systems. Developed automated reporting frameworks and foundational SQL-based ETL pipelines.</p>
+                    </div>
+                </div>
+                <div class="relative"></div> </div>
+
+            <div class="md:hidden relative space-y-12 py-8 pt-10">
+                <div class="absolute left-[23px] top-0 bottom-0 w-[2px] bg-zinc-800 z-0"></div>
+                <div class="absolute top-[-10px] left-[10px] text-[10px] font-mono text-blue-500 tracking-widest uppercase animate-pulse">Start</div>
+                
+                <div class="moto-wrapper mobile-moto pointer-events-none">
+                    <div class="smoke-container"><div class="smoke s1"></div><div class="smoke s2"></div><div class="smoke s3"></div></div>
+                    <i class="fas fa-motorcycle moto-icon"></i>
+                </div>
+
+                <div class="relative pl-16 group z-20">
+                    <div class="absolute left-0 top-0 w-12 h-12 rounded bg-blue-900/20 border border-blue-500 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                        <i class="fas fa-layer-group text-blue-400"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <span class="inline-block text-xs font-mono text-blue-400 tracking-tighter bg-blue-900/20 border border-blue-900/50 px-2 py-1 rounded">SERVING LAYER // PRESENT</span>
+                        <h4 class="text-white font-bold text-xl leading-tight">Sr. Analytical Engineer</h4>
+                        <p class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Current Company</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">Architecting end-to-end data products for executive leadership. Optimizing warehouse costs by auditing and refactoring legacy queries.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-16 group z-20">
+                    <div class="absolute left-0 top-0 w-12 h-12 rounded bg-[#0a0a0c] border border-zinc-800 flex items-center justify-center group-hover:border-blue-500 transition duration-300">
+                        <i class="fas fa-filter text-zinc-500 group-hover:text-blue-500"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <span class="inline-block text-xs font-mono text-zinc-500 tracking-tighter bg-zinc-900 px-2 py-1 rounded">TRANSFORM LAYER // 2021-2023</span>
+                        <h4 class="text-white font-bold text-xl leading-tight">Analytical Engineer</h4>
+                        <p class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Company Name Beta</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">Scaled data warehouse infrastructure. Managed dbt modeling layers, ensuring rigorous data quality checks and testing protocols.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-16 group z-20">
+                    <div class="absolute left-0 top-0 w-12 h-12 rounded bg-[#0a0a0c] border border-zinc-800 flex items-center justify-center group-hover:border-blue-500 transition duration-300">
+                        <i class="fas fa-database text-zinc-500 group-hover:text-blue-500"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <span class="inline-block text-xs font-mono text-zinc-500 tracking-tighter bg-zinc-900 px-2 py-1 rounded">INGESTION LAYER // 2018-2020</span>
+                        <h4 class="text-white font-bold text-xl leading-tight">Data Analyst</h4>
+                        <p class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Company Name Alpha</p>
+                        <p class="text-zinc-400 text-sm leading-relaxed">Extracted raw data from legacy systems. Developed automated reporting frameworks and foundational SQL-based ETL pipelines.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="animate-on-load delay-400 space-y-8">
+            <h2 class="text-white text-xl md:text-2xl font-black uppercase tracking-widest flex items-center gap-4">
+                <span class="w-8 md:w-12 h-[2px] bg-blue-500 block"></span>
+                Engineering Projects
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 md:gap-6 pt-4">
+                <a href="#" class="group block p-6 rounded-lg border border-zinc-900 bg-zinc-900/20 hover:border-blue-500/50 transition duration-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-server text-xl text-zinc-500 group-hover:text-blue-400 transition"></i>
+                        <span class="text-zinc-600 text-[10px] uppercase tracking-widest font-bold group-hover:text-blue-400 transition">Repo →</span>
+                    </div>
+                    <h4 class="text-white font-bold text-lg mb-2">Warehouse Cost Optimizer</h4>
+                    <p class="text-zinc-400 text-sm mb-4">A Python-based cron job that analyzes Snowflake query history to identify and terminate expensive, redundant queries.</p>
+                    <div class="flex gap-2">
+                        <span class="text-[9px] font-mono text-zinc-500 bg-zinc-900 px-2 py-1 rounded">Python</span>
+                        <span class="text-[9px] font-mono text-zinc-500 bg-zinc-900 px-2 py-1 rounded">Snowflake</span>
+                    </div>
+                </a>
+                <a href="#" class="group block p-6 rounded-lg border border-zinc-900 bg-zinc-900/20 hover:border-blue-500/50 transition duration-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-brain text-xl text-zinc-500 group-hover:text-blue-400 transition"></i>
+                        <span class="text-zinc-600 text-[10px] uppercase tracking-widest font-bold group-hover:text-blue-400 transition">Repo →</span>
+                    </div>
+                    <h4 class="text-white font-bold text-lg mb-2">Market Sentiment Engine</h4>
+                    <p class="text-zinc-400 text-sm mb-4">End-to-end pipeline scraping financial news, processing via NLP models, and staging sentiment scores in dbt.</p>
+                    <div class="flex gap-2">
+                        <span class="text-[9px] font-mono text-zinc-500 bg-zinc-900 px-2 py-1 rounded">dbt</span>
+                        <span class="text-[9px] font-mono text-zinc-500 bg-zinc-900 px-2 py-1 rounded">Scikit-Learn</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="visualizations" class="animate-on-load delay-500 space-y-8">
+            <h2 class="text-white text-xl md:text-2xl font-black uppercase tracking-widest flex items-center gap-4">
+                <span class="w-8 md:w-12 h-[2px] bg-blue-500 block"></span>
+                Visualizations
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4">
+                <a href="#" class="group relative aspect-video bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent z-10 opacity-80 group-hover:opacity-60 transition duration-300"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-zinc-800 text-6xl group-hover:scale-105 transition duration-500">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="absolute bottom-4 left-4 z-20">
+                        <h4 class="text-white font-bold">Executive Revenue Tracker</h4>
+                        <p class="text-blue-400 text-xs font-mono mt-1">Tableau Public</p>
+                    </div>
+                </a>
+                <a href="#" class="group relative aspect-video bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent z-10 opacity-80 group-hover:opacity-60 transition duration-300"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-zinc-800 text-6xl group-hover:scale-105 transition duration-500">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="absolute bottom-4 left-4 z-20">
+                        <h4 class="text-white font-bold">User Churn Analysis</h4>
+                        <p class="text-blue-400 text-xs font-mono mt-1">PowerBI</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer class="pt-20 pb-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10">
+            <div class="flex gap-10 md:gap-12">
+                <a href="#" class="text-zinc-600 hover:text-white transition-all text-2xl"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-zinc-600 hover:text-white transition-all text-2xl"><i class="fab fa-github"></i></a>
+                <a href="mailto:jagadeesh@email.com" class="text-zinc-600 hover:text-white transition-all text-2xl"><i class="far fa-envelope"></i></a>
+            </div>
+            <div class="text-[10px] text-zinc-700 font-mono tracking-[0.3em] uppercase">
+                Jagadeesh D // End of Pipeline
+            </div>
+        </footer>
+
+    </main>
+
+</body>
+</html>
